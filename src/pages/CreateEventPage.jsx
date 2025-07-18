@@ -26,6 +26,7 @@ function CreateEventPage() {
       .then(res => res.json())
       .then(data => {
         alert('Evento creato con successo!');
+        window.location.href = '/';
         console.log(data);
       })
       .catch(err => {
