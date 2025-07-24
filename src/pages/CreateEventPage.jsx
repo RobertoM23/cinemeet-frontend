@@ -1,81 +1,62 @@
-import { useState } from 'react';
+import React, { useState } from "react";
+import { Container, Form, Button } from "react-bootstrap";
 
-function CreateEventPage() {
-  const [eventData, setEventData] = useState({
-    movieTitle: '',
-    date: '',
-    cinema: '',
-    creator: { id: 1 } // id utente temporaneo
-  });
+const CreateEventPage = () => {
+  const [form, setForm] = useState({ movieTitle: "", cinema: "", date: "" });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEventData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
-
-    fetch('http://localhost:8080/api/events', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(eventData)
-    })
-      .then(res => res.json())
-      .then(data => {
-        alert('Evento creato con successo!');
-        window.location.href = '/';
-        console.log(data);
-      })
-      .catch(err => {
-        console.error('Errore:', err);
-        alert('Errore nella creazione evento');
-      });
+    fetch("http://localhost:8080/api/events", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form)
+    }).then(() => {
+      alert("Evento creato!");
+      setForm({ movieTitle: "", cinema: "", date: "" });
+    });
   };
 
   return (
-    <div>
-      <h2>Crea un nuovo evento</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Titolo Film:</label>
-          <input
+    <Container className="py-4">
+      <h2>Crea un evento</h2>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group className="mb-3">
+          <Form.Label>Film</Form.Label>
+          <Form.Control
             type="text"
             name="movieTitle"
-            value={eventData.movieTitle}
-            onChange={handleChange}
+            value={form.movieTitle}
+            onChange={e => setForm({ ...form, movieTitle: e.target.value })}
             required
           />
-        </div>
+        </Form.Group>
 
-        <div>
-          <label>Data:</label>
-          <input
-            type="date"
-            name="date"
-            value={eventData.date}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div>
-          <label>Cinema:</label>
-          <input
+        <Form.Group className="mb-3">
+          <Form.Label>Cinema</Form.Label>
+          <Form.Control
             type="text"
             name="cinema"
-            value={eventData.cinema}
-            onChange={handleChange}
+            value={form.cinema}
+            onChange={e => setForm({ ...form, cinema: e.target.value })}
             required
           />
-        </div>
+        </Form.Group>
 
-        <button type="submit">Crea evento</button>
-      </form>
-    </div>
+        <Form.Group className="mb-3">
+          <Form.Label>Data</Form.Label>
+          <Form.Control
+            type="date"
+            name="date"
+            value={form.date}
+            onChange={e => setForm({ ...form, date: e.target.value })}
+            required
+          />
+        </Form.Group>
+
+        <Button type="submit">Crea</Button>
+      </Form>
+    </Container>
   );
-}
+};
 
 export default CreateEventPage;

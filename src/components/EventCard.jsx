@@ -1,27 +1,41 @@
-import React from 'react';
+import React from "react";
+import { Card, Button } from "react-bootstrap";
+import { Calendar, GeoAlt } from "react-bootstrap-icons";
 
-const EventCard = ({ event, onJoin, onDelete, showDelete }) => {
+const EventCard = ({ event, onJoin, onLeave, isJoined }) => {
   return (
-    <div className="border p-4 rounded mb-3 shadow-sm">
-      <h3 className="text-xl font-bold">{event.movieTitle}</h3>
-      <p><strong>Data:</strong> {event.date}</p>
-      <p><strong>Cinema:</strong> {event.cinema}</p>
-      {showDelete ? (
-        <button
-          className="mt-2 bg-red-500 text-white px-3 py-1 rounded"
-          onClick={() => onDelete(event.id)}
-        >
-          Delete
-        </button>
-      ) : (
-        <button
-          className="mt-2 bg-blue-500 text-white px-3 py-1 rounded"
-          onClick={() => onJoin(event.id)}
-        >
-          Join
-        </button>
-      )}
-    </div>
+    <Card className="h-100 shadow-sm border-0">
+      <Card.Body>
+        <Card.Title className="fw-bold">{event.title}</Card.Title>
+
+        <Card.Text className="text-muted mb-1">
+          <Calendar className="me-2" />
+          {event.date}
+        </Card.Text>
+
+        <Card.Text className="text-muted">
+          <GeoAlt className="me-2" />
+          {event.cinema}
+        </Card.Text>
+
+        {isJoined ? (
+          <>
+            <div className="text-success fw-semibold">Hai già aderito</div>
+            <Button
+              variant="outline-danger"
+              className="mt-2"
+              onClick={() => onLeave(event.id)}
+            >
+              Abbandona
+            </Button>
+          </>
+        ) : (
+          <Button variant="primary" onClick={() => onJoin(event.id)}>
+            Partecipa
+          </Button>
+        )}
+      </Card.Body>
+    </Card>
   );
 };
 
