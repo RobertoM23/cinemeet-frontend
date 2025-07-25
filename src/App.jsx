@@ -1,38 +1,58 @@
-import { Routes, Route, Link } from 'react-router-dom';
-import HomePage from './pages/HomePage';
-import CreateEventPage from './pages/CreateEventPage';
-import SuggestedPage from './pages/SuggestedPage';
-import FilterPage from './pages/FilterPage';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
-
-import { Container, Navbar, Nav } from 'react-bootstrap';
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import EventList from "./components/EventList";
+import CreateEvent from "./pages/CreateEvent";
+import Profile from "./pages/Profile";
 
 function App() {
-  return (
-    <div>
-      <Navbar bg="dark" variant="dark" expand="lg">
-        <Container>
-          <Navbar.Brand as={Link} to="/">Cinemeet</Navbar.Brand>
-          <Nav className="me-auto">
-            <Nav.Link as={Link} to="/">Home</Nav.Link>
-            <Nav.Link as={Link} to="/create">Crea Evento</Nav.Link>
-            <Nav.Link as={Link} to="/suggested">Suggeriti</Nav.Link>
-            <Nav.Link as={Link} to="/filter">Filtra Eventi</Nav.Link>
-          </Nav>
-        </Container>
-      </Navbar>
+  const [message, setMessage] = useState("");
+  const [user, setUser] = useState(localStorage.getItem("userEmail"));
+  const navigate = useNavigate();
 
-      <Container className="mt-4">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/create" element={<CreateEventPage />} />
-          <Route path="/suggested" element={<SuggestedPage />} />
-          <Route path="/filter" element={<FilterPage />} />
-        </Routes>
-      </Container>
+  function logout() {
+    localStorage.removeItem("userEmail");
+    setUser(null);
+    navigate("/");
+  }
+
+  return (
+    <div className="p-2">
+      <nav className="mb-4 flex gap-4 border-b pb-2">
+        <Link to="/" className="text-blue-700">Home</Link>
+        <Link to="/events" className="text-blue-700">Eventi</Link>
+        <Link to="/events/create" className="text-blue-700">Crea evento</Link>
+        <Link to="/profile" className="text-blue-700">Profilo</Link>
+        <div className="ml-auto flex gap-4">
+          {user ? (
+            <>
+              <span className="text-sm">{user}</span>
+              <button onClick={logout} className="text-red-600">Logout</button>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="text-blue-700">Login</Link>
+              <Link to="/register" className="text-blue-700">Registrati</Link>
+            </>
+          )}
+        </div>
+      </nav>
+
+      {message && <div className="bg-green-100 text-green-700 p-2 rounded mb-2">{message}</div>}
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login setUser={setUser} />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/events" element={<EventList />} />
+        <Route path="/events/create" element={<CreateEvent setMessage={setMessage} />} />
+        <Route path="/profile" element={<Profile />} />
+      </Routes>
     </div>
   );
 }
 
 export default App;
+
