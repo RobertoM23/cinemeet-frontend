@@ -1,8 +1,14 @@
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 
 function CreateEvent({ setMessage }) {
-  const [movieTitle, setMovieTitle] = useState("");
+  const location = useLocation();
+  const defaultTitle = location.state?.movieTitle || "";
+  const defaultPoster = location.state?.poster || "";
+
+  const [movieTitle, setMovieTitle] = useState(defaultTitle);
+  const [poster, setPoster] = useState(defaultPoster);
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [cinema, setCinema] = useState("");
@@ -11,8 +17,15 @@ function CreateEvent({ setMessage }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const user = localStorage.getItem("userEmail"); // se serve nel backend
-    const body = JSON.stringify({ movieTitle, date, time, cinema, user });
+    const user = localStorage.getItem("userEmail");
+    const body = JSON.stringify({
+      movieTitle,
+      date,
+      time,
+      cinema,
+      user,
+      poster,
+    });
 
     fetch("/api/events", {
       method: "POST",
@@ -36,6 +49,18 @@ function CreateEvent({ setMessage }) {
   return (
     <div className="card p-4 shadow-sm">
       <h3 className="mb-4">Crea un evento</h3>
+
+      {poster && (
+        <div className="mb-3 text-center">
+          <img
+            src={poster}
+            alt={movieTitle}
+            className="img-fluid rounded shadow"
+            style={{ maxHeight: "400px" }}
+          />
+        </div>
+      )}
+
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label className="form-label">Titolo film</label>

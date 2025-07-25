@@ -1,11 +1,15 @@
 import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import EventList from "./components/EventList";
 import CreateEvent from "./pages/CreateEvent";
 import Profile from "./pages/Profile";
+import Footer from "./components/Footer";
+
+
 
 function App() {
   const [message, setMessage] = useState("");
@@ -19,9 +23,14 @@ function App() {
   }
 
   return (
-    <div className="bg-light min-vh-100">
+    <div className="bg-light d-flex flex-column min-vh-100">
       <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4 px-3">
-        <Link className="navbar-brand" to="/">CineMeet</Link>
+       <Link className="navbar-brand" to="/">
+  <img src="/logo.png"
+    alt="logo"
+    style={{ width: '100px', height: 'auto' }}
+  />
+</Link>
         <div className="collapse navbar-collapse">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
@@ -58,7 +67,7 @@ function App() {
         </div>
       </nav>
 
-      <div className="container">
+      <div className="container flex-grow-1">
         {message && <div className="alert alert-success text-center w-100 mx-auto">{message}</div>}
         <Routes>
           <Route path="/" element={<Home />} />
@@ -69,11 +78,12 @@ function App() {
           <Route path="/profile" element={<Profile />} />
         </Routes>
       </div>
+
+      <Footer />
     </div>
   );
 }
 
 export default App;
-
 
 

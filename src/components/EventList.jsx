@@ -6,40 +6,86 @@ import { SuggestedEvents } from "./SuggestedEvents";
 
 function EventList() {
   const [events, setEvents] = useState([]);
-  const [chat, setChat] = useState([]);
-  const [reviews, setReviews] = useState([]);
-  const [suggested, setSuggested] = useState([]);
-  const [selectedEvent, setSelectedEvent] = useState(null);
-  const email = "demo@example.com";
+  const [editingEvent, setEditingEvent] = useState(null);
 
   useEffect(() => {
-    fetch("/api/events").then(res => res.json()).then(setEvents);
-    fetch(`/api/suggestions/${email}`).then(res => res.json()).then(setSuggested);
+    fetch("/api/events")
+      .then(res => res.json())
+      .then(setEvents);
   }, []);
 
-  function openEvent(event) {
-    setSelectedEvent(event);
-    fetch(`/api/chat/${event.id}`).then(res => res.json()).then(setChat);
-    fetch(`/api/reviews/${event.id}`).then(res => res.json()).then(setReviews);
-  }
+  const handleDelete = async (id) => {
+    await fetch(`/api/events/${id}`, { method: "DELETE" });
+    setEvents(events.filter(e => e.id !== id));
+  };
+
+  const handleEdit = (event) => {
+    setEditingEvent(event);
+  };
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    await fetch(`/api/events/${editingEvent.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(editingEvent),
+    });
+
+    const updatedList = events.map(ev =>
+      ev.id === editingEvent.id ? editingEvent : ev
+    );
+    setEvents(updatedList);
+    setEditingEvent(null);
+  };
 
   return (
-    <div className="p-4 grid gap-4">
-      <h1 className="text-xl">Eventi disponibili</h1>
-      {events.map((e) => (
-        <EventCard key={e.id} event={e} onOpen={openEvent} />
+    <div>
+      <h2>Eventi disponibili</h2>
+      {events.map(event => (
+        <div key={event.id} className="card p-3 my-2">
+          <strong>{event.movieTitle}</strong> – {event.date} {event.time} @ {event.cinema}
+          <div className="mt-2">
+            <button className="btn btn-warning btn-sm me-2" onClick={() => handleEdit(event)}>
+              Modifica
+            </button>
+            <button className="btn btn-danger btn-sm" onClick={() => handleDelete(event.id)}>
+              Elimina
+            </button>
+          </div>
+        </div>
       ))}
 
-      <h1 className="text-xl mt-6">Suggeriti per te</h1>
-      <SuggestedEvents list={suggested} />
-
-      {selectedEvent && (
-        <div className="mt-6">
-          <h2 className="text-lg">Chat evento</h2>
-          <ChatBox messages={chat} />
-
-          <h2 className="text-lg mt-4">Recensioni</h2>
-          <ReviewList reviews={reviews} />
+      {editingEvent && (
+        <div className="card p-3 mt-4">
+          <h5>Modifica evento</h5>
+          <form onSubmit={handleUpdate}>
+            <input
+              className="form-control my-1"
+              value={editingEvent.movieTitle}
+              onChange={e => setEditingEvent({ ...editingEvent, movieTitle: e.target.value })}
+              placeholder="Titolo film"
+            />
+            <input
+              className="form-control my-1"
+              value={editingEvent.date}
+              onChange={e => setEditingEvent({ ...editingEvent, date: e.target.value })}
+              placeholder="Data"
+            />
+            <input
+              className="form-control my-1"
+              value={editingEvent.time}
+              onChange={e => setEditingEvent({ ...editingEvent, time: e.target.value })}
+              placeholder="Orario"
+            />
+            <input
+              className="form-control my-1"
+              value={editingEvent.cinema}
+              onChange={e => setEditingEvent({ ...editingEvent, cinema: e.target.value })}
+              placeholder="Cinema"
+            />
+            <button className="btn btn-success btn-sm mt-2" type="submit">Salva</button>
+            <button className="btn btn-secondary btn-sm mt-2 ms-2" onClick={() => setEditingEvent(null)}>Annulla</button>
+          </form>
         </div>
       )}
     </div>
@@ -47,5 +93,4 @@ function EventList() {
 }
 
 export default EventList;
-
 

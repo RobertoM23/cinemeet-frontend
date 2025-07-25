@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 function Home() {
   const [movies, setMovies] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("/movies.json")
@@ -20,11 +21,19 @@ function Home() {
               src={movie.poster_path}
               className="card-img-top"
               alt={movie.title}
+              style={{ cursor: "pointer" }}
+              onClick={() =>
+                navigate("/events/create", {
+                  state: {
+                    movieTitle: movie.title,
+                    poster: movie.poster_path
+                  },
+                })
+              }
             />
             <div className="card-body">
               <h5 className="card-title">{movie.title}</h5>
               <p className="card-text">{movie.overview}</p>
-              <button className="btn btn-primary">Crea evento</button>
             </div>
           </div>
         </div>
