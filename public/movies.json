@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "title": "Fight Club",
+    "overview": "Un uomo annoiato dalla sua vita incontra Tyler Durden e fonda un fight club.",
+    "poster_path": "https://image.tmdb.org/t/p/w500/bptfVGEQuv6vDTIMVCHjJ9Dz8PX.jpg"
+  },
+  {
+    "id": 2,
+    "title": "Gladiator",
+    "overview": "Un ex generale romano diventa gladiatore per vendicarsi dell'imperatore corrotto che ha ucciso la sua famiglia.",
+    "poster_path": "https://image.tmdb.org/t/p/w500/ty8TGRuvJLPUmAR1H1nRIsgwvim.jpg"
+  },
+  {
+    "id": 3,
+    "title": "Interstellar",
+    "overview": "Un gruppo di astronauti viaggia attraverso un wormhole alla ricerca di una nuova casa per l'umanit\u00e0.",
+    "poster_path": "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg"
+  },
+  {
+    "id": 4,
+    "title": "The Matrix",
+    "overview": "Un hacker scopre la verit\u00e0 sulla sua realt\u00e0 simulata e guida la ribellione contro le macchine.",
+    "poster_path": "https://image.tmdb.org/t/p/w500/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg"
+  },
+  {
+    "id": 5,
+    "title": "The Dark Knight",
+    "overview": "Batman affronta il Joker, un criminale geniale e imprevedibile che getta Gotham nel caos.",
+    "poster_path": "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg"
+  },
+  {
+    "id": 6,
+    "title": "The Lord of the Rings: The Fellowship of the Ring",
+    "overview": "Un giovane hobbit parte per distruggere un anello magico che potrebbe distruggere il mondo.",
+    "poster_path": "https://image.tmdb.org/t/p/w500/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg"
+  }
+]
