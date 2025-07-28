@@ -13,7 +13,7 @@ export default function Footer() {
             <i className="bi bi-twitter-x fs-4"></i>
           </a>
         </div>
-        <small>&copy; 2025 CineMeet — Tutti i diritti riservati</small>
+        <small>&copy; {new Date().getFullYear()} CineMeet — Tutti i diritti riservati</small>
       </div>
     </footer>
   );

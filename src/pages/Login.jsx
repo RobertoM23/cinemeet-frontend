@@ -1,37 +1,67 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Login({ setUser }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  function handleLogin(e) {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    fetch("/api/users/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password })
-    }).then(res => {
-      if (res.ok) {
-        localStorage.setItem("userEmail", email);
-        setUser(email);
-        navigate("/");
+    try {
+      const response = await fetch('http://localhost:8080/api/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (response.ok) {
+        const user = await response.json();
+        localStorage.setItem('user', JSON.stringify(user));
+        navigate('/profile');
       } else {
-        alert("Credenziali non valide");
+        setError('Credenziali non valide');
       }
-    });
-  }
+    } catch (err) {
+      console.error('Login error:', err);
+      setError('Errore durante il login');
+    }
+  };
 
   return (
-    <form onSubmit={handleLogin} className="p-4 max-w-md mx-auto grid gap-2">
-      <h1 className="text-xl">Login</h1>
-      <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" required className="border p-2 rounded" />
-      <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" required className="border p-2 rounded" />
-      <button type="submit" className="bg-blue-600 text-white py-2 px-4 rounded">Login</button>
-    </form>
+    <div className="container mt-5">
+      <h2>Login</h2>
+      <form onSubmit={handleLogin}>
+        <div className="mb-3">
+          <label>Email</label>
+          <input
+            type="email"
+            className="form-control"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label>Password</label>
+          <input
+            type="password"
+            className="form-control"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+        {error && <div className="alert alert-danger">{error}</div>}
+        <button type="submit" className="btn btn-primary">Login</button>
+      </form>
+    </div>
   );
 }
 
 export default Login;
+
 

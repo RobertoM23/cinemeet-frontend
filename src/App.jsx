@@ -1,5 +1,6 @@
 import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";

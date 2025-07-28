@@ -1,71 +1,84 @@
 import { useEffect, useState } from "react";
 
-export default function Profile() {
+function Profile() {
   const [user, setUser] = useState({
-    nome: "",
-    cognome: "",
-    email: "",
-    registiPreferiti: "",
-    eventiPassati: ""
+    id: '',
+    email: '',
+    nome: '',
+    cognome: '',
+    registiPreferiti: '',
+    eventiPassati: ''
   });
 
-  const userId = 1; // aggiorna con valore dinamico se serve
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    fetch(`/api/users/profile/${userId}`)
-      .then(res => res.json())
-      .then(data => setUser(data))
-      .catch(err => console.error("Errore profilo:", err));
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    if (storedUser) {
+      setUser(storedUser);
+    }
   }, []);
 
-  function handleChange(e) {
+  const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
-  }
+  };
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    fetch(`/api/users/profile/${userId}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(user)
-    })
-      .then(res => {
-        if (!res.ok) throw new Error();
-        alert("Profilo aggiornato");
-      })
-      .catch(() => alert("Errore aggiornamento"));
-  }
+  const handleSave = async () => {
+    try {
+      const response = await fetch(`http://localhost:8080/api/users/${user.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(user),
+      });
+
+      if (response.ok) {
+        const updatedUser = await response.json();
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+        setUser(updatedUser);
+        setSuccess(true);
+        setError(false);
+      } else {
+        setError(true);
+        setSuccess(false);
+      }
+    } catch (err) {
+      console.error('Errore durante l\'aggiornamento:', err);
+      setError(true);
+      setSuccess(false);
+    }
+  };
 
   return (
-    <div className="container d-flex justify-content-center mt-5">
-      <div className="card shadow p-4" style={{ maxWidth: "600px", width: "100%" }}>
-        <h3 className="mb-4 text-center">Il tuo profilo</h3>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label className="form-label">Nome</label>
-            <input className="form-control" name="nome" value={user.nome} onChange={handleChange} />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Cognome</label>
-            <input className="form-control" name="cognome" value={user.cognome} onChange={handleChange} />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Email</label>
-            <input className="form-control" name="email" value={user.email} onChange={handleChange} />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Registi preferiti</label>
-            <input className="form-control" name="registiPreferiti" value={user.registiPreferiti} onChange={handleChange} />
-          </div>
-          <div className="mb-4">
-            <label className="form-label">Eventi passati</label>
-            <textarea className="form-control" name="eventiPassati" rows="3" value={user.eventiPassati} onChange={handleChange} />
-          </div>
-          <div className="d-grid">
-            <button className="btn btn-primary">Salva modifiche</button>
-          </div>
-        </form>
+    <div className="container mt-4">
+      <h2>Profilo</h2>
+      <div className="mb-3">
+        <label>Email</label>
+        <input name="email" className="form-control" value={user.email} onChange={handleChange} />
       </div>
+      <div className="mb-3">
+        <label>Nome</label>
+        <input name="nome" className="form-control" value={user.nome} onChange={handleChange} />
+      </div>
+      <div className="mb-3">
+        <label>Cognome</label>
+        <input name="cognome" className="form-control" value={user.cognome} onChange={handleChange} />
+      </div>
+      <div className="mb-3">
+        <label>Registi Preferiti</label>
+        <input name="registiPreferiti" className="form-control" value={user.registiPreferiti} onChange={handleChange} />
+      </div>
+      <div className="mb-3">
+        <label>Eventi Passati</label>
+        <input name="eventiPassati" className="form-control" value={user.eventiPassati} onChange={handleChange} />
+      </div>
+      <button className="btn btn-primary" onClick={handleSave}>Salva</button>
+      {success && <div className="alert alert-success mt-3">Profilo aggiornato</div>}
+      {error && <div className="alert alert-danger mt-3">Errore durante l'aggiornamento</div>}
     </div>
   );
 }
+
+export default Profile;
