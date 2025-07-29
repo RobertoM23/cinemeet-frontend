@@ -25,48 +25,63 @@ function App() {
 
   return (
     <div className="bg-light d-flex flex-column min-vh-100">
-      <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4 px-3">
-       <Link className="navbar-brand" to="/">
-  <img src="/logo.png"
-    alt="logo"
-    style={{ width: '100px', height: 'auto' }}
-  />
-</Link>
-        <div className="collapse navbar-collapse">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <Link className="nav-link" to="/events">Eventi</Link>
+      <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4 px-4 py-2">
+  <div className="container-fluid">
+    {/* Toggle button per mobile */}
+    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
+      <span className="navbar-toggler-icon"></span>
+    </button>
+
+    {/* Logo centrato */}
+    <Link className="navbar-brand mx-auto d-lg-none" to="/">
+      <img src="/logo.png" alt="logo" style={{ width: '120px', height: 'auto' }} />
+    </Link>
+
+    <div className="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
+      {/* Sinistra */}
+      <ul className="navbar-nav d-flex flex-row flex-lg-row">
+        <li className="nav-item mx-2">
+          <Link className="nav-link fw-semibold text-dark" to="/events">Eventi</Link>
+        </li>
+        <li className="nav-item mx-2">
+          <Link className="nav-link fw-semibold text-dark" to="/events/create">Crea evento</Link>
+        </li>
+      </ul>
+
+      {/* Logo desktop */}
+      <Link className="navbar-brand d-none d-lg-block mx-auto" to="/">
+        <img src="/logo.png" alt="logo" className="img-fluid d-none d-lg-block"
+         style={{ width: '160px', height: 'auto' }} />
+      </Link>
+
+      {/* Destra */}
+      <ul className="navbar-nav d-flex flex-row flex-lg-row">
+        <li className="nav-item mx-2">
+          <Link className="nav-link fw-semibold text-dark" to="/profile">Profilo</Link>
+        </li>
+        {user ? (
+          <>
+            <li className="nav-item mx-2 d-flex align-items-center">
+              <span className="navbar-text text-secondary me-2">{user}</span>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/events/create">Crea evento</Link>
+            <li className="nav-item mx-2">
+              <button onClick={logout} className="btn btn-outline-danger btn-sm">Logout</button>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/profile">Profilo</Link>
+          </>
+        ) : (
+          <>
+            <li className="nav-item mx-2">
+              <Link className="nav-link fw-semibold text-dark" to="/login">Login</Link>
             </li>
-          </ul>
-          <ul className="navbar-nav ms-auto">
-            {user ? (
-              <>
-                <li className="nav-item">
-                  <span className="navbar-text me-2">{user}</span>
-                </li>
-                <li className="nav-item">
-                  <button onClick={logout} className="btn btn-outline-danger btn-sm">Logout</button>
-                </li>
-              </>
-            ) : (
-              <>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/login">Login</Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/register">Registrati</Link>
-                </li>
-              </>
-            )}
-          </ul>
-        </div>
-      </nav>
+            <li className="nav-item mx-2">
+              <Link className="nav-link fw-semibold text-dark" to="/register">Registrati</Link>
+            </li>
+          </>
+        )}
+      </ul>
+    </div>
+  </div>
+</nav>
 
       <div className="container flex-grow-1">
         {message && <div className="alert alert-success text-center w-100 mx-auto">{message}</div>}

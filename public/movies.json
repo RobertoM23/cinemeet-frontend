@@ -34,5 +34,17 @@
     "title": "The Lord of the Rings: The Fellowship of the Ring",
     "overview": "Un giovane hobbit parte per distruggere un anello magico che potrebbe distruggere il mondo.",
     "poster_path": "https://image.tmdb.org/t/p/w500/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg"
-  }
+  },
+  {
+  "id": 7,
+  "title": "Inception",
+  "overview": "Un ladro specializzato nel furto di segreti attraverso i sogni deve compiere l'impossibile: impiantare un'idea.",
+  "poster_path": "https://image.tmdb.org/t/p/w500/edv5CZvWj09upOsy2Y6IwDhK8bt.jpg"
+},
+{
+  "id": 8,
+  "title": "Pulp Fiction",
+  "overview": "Le vite di due sicari, un pugile e altri personaggi si intrecciano in una serie di eventi violenti e assurdi.",
+  "poster_path": "https://image.tmdb.org/t/p/w500/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg"
+}
 ]

@@ -1,28 +1,92 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [form, setForm] = useState({
+    nome: "",
+    cognome: "",
+    email: "",
+    password: "",
+  });
 
-  function handleRegister(e) {
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    fetch("/api/users/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password })
-    }).then(res => {
-      if (res.ok) alert("Registrazione completata");
-      else alert("Errore nella registrazione");
-    });
-  }
+    try {
+      const res = await fetch("/api/users/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (res.ok) {
+        alert("Registrazione riuscita");
+        navigate("/login");
+      } else {
+        alert("Errore nella registrazione");
+      }
+    } catch (err) {
+      alert("Errore di rete");
+    }
+  };
 
   return (
-    <form onSubmit={handleRegister} className="p-4 max-w-md mx-auto grid gap-2">
-      <h1 className="text-xl">Registrati</h1>
-      <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" required className="border p-2 rounded" />
-      <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" required className="border p-2 rounded" />
-      <button type="submit" className="bg-green-600 text-white py-2 px-4 rounded">Registrati</button>
-    </form>
+    <div className="container mt-5">
+      <div className="card p-4 shadow-sm col-md-6 mx-auto">
+        <h2 className="mb-4 text-center">Registrati</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label>Nome</label>
+            <input
+              name="nome"
+              className="form-control"
+              value={form.nome}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label>Cognome</label>
+            <input
+              name="cognome"
+              className="form-control"
+              value={form.cognome}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label>Email</label>
+            <input
+              type="email"
+              name="email"
+              className="form-control"
+              value={form.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label>Password</label>
+            <input
+              type="password"
+              name="password"
+              className="form-control"
+              value={form.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <button type="submit" className="btn btn-primary w-100">
+            Registrati
+          </button>
+        </form>
+      </div>
+    </div>
   );
 }
 

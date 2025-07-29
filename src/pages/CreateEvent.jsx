@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 
+
 function CreateEvent({ setMessage }) {
   const location = useLocation();
   const defaultTitle = location.state?.movieTitle || "";
@@ -16,7 +17,6 @@ function CreateEvent({ setMessage }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const user = localStorage.getItem("userEmail");
     const body = JSON.stringify({
       movieTitle,
@@ -47,65 +47,71 @@ function CreateEvent({ setMessage }) {
   };
 
   return (
-    <div className="card p-4 shadow-sm">
-      <h3 className="mb-4">Crea un evento</h3>
+    <div className="container mt-5">
+      <div className="card shadow-lg p-4">
+        <h3 className="mb-4 text-center">Crea un evento</h3>
 
-      {poster && (
-        <div className="mb-3 text-center">
-          <img
-            src={poster}
-            alt={movieTitle}
-            className="img-fluid rounded shadow"
-            style={{ maxHeight: "400px" }}
-          />
-        </div>
-      )}
+        {poster && (
+          <div className="text-center mb-4">
+            <img
+              src={poster}
+              alt={movieTitle}
+              className="img-fluid rounded"
+              style={{ maxHeight: "400px" }}
+            />
+          </div>
+        )}
 
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label className="form-label">Titolo film</label>
-          <input
-            className="form-control"
-            value={movieTitle}
-            onChange={(e) => setMovieTitle(e.target.value)}
-            required
-          />
-        </div>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label className="form-label">Titolo film</label>
+            <input
+              className="form-control"
+              value={movieTitle}
+              onChange={(e) => setMovieTitle(e.target.value)}
+              required
+            />
+          </div>
 
-        <div className="mb-3">
-          <label className="form-label">Data</label>
-          <input
-            type="date"
-            className="form-control"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            required
-          />
-        </div>
+          <div className="mb-3">
+            <label className="form-label">Data</label>
+            <input
+              type="date"
+              className="form-control"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              required
+            />
+          </div>
 
-        <div className="mb-3">
-          <label className="form-label">Orario</label>
-          <input
-            type="time"
-            className="form-control"
-            value={time}
-            onChange={(e) => setTime(e.target.value)}
-            required
-          />
-        </div>
+          <div className="mb-3">
+            <label className="form-label">Orario</label>
+            <input
+              type="time"
+              className="form-control"
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+              required
+            />
+          </div>
 
-        <div className="mb-3">
-          <label className="form-label">Cinema</label>
-          <input
-            className="form-control"
-            value={cinema}
-            onChange={(e) => setCinema(e.target.value)}
-            required
-          />
-        </div>
+          <div className="mb-3">
+            <label className="form-label">Cinema</label>
+            <input
+              className="form-control"
+              value={cinema}
+              onChange={(e) => setCinema(e.target.value)}
+              required
+            />
+          </div>
 
-        <button type="submit" className="btn btn-primary">Crea evento</button>
-      </form>
+          <div className="d-grid">
+            <button type="submit" className="btn btn-primary btn-lg">
+              Crea evento
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

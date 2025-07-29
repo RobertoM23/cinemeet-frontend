@@ -39,53 +39,79 @@ function EventList() {
   };
 
   return (
-    <div>
-      <h2>Eventi disponibili</h2>
-      {events.map(event => (
-        <div key={event.id} className="card p-3 my-2">
-          <strong>{event.movieTitle}</strong> – {event.date} {event.time} @ {event.cinema}
-          <div className="mt-2">
-            <button className="btn btn-warning btn-sm me-2" onClick={() => handleEdit(event)}>
-              Modifica
-            </button>
-            <button className="btn btn-danger btn-sm" onClick={() => handleDelete(event.id)}>
-              Elimina
-            </button>
+    <div className="container py-4">
+      <h2 className="mb-4 text-center fw-bold">Eventi Disponibili</h2>
+
+      <div className="row row-cols-1 row-cols-md-2 g-4">
+        {events.map(event => (
+          <div key={event.id} className="col">
+            <div className="card shadow-sm h-100">
+              <div className="card-body">
+                <h5 className="card-title">{event.movieTitle}</h5>
+                <p className="card-text">
+                  <strong>Data:</strong> {event.date}<br />
+                  <strong>Orario:</strong> {event.time}<br />
+                  <strong>Cinema:</strong> {event.cinema}
+                </p>
+                <div className="d-flex justify-content-end gap-2">
+                  <button className="btn btn-outline-warning btn-sm" onClick={() => handleEdit(event)}>
+                    Modifica
+                  </button>
+                  <button className="btn btn-outline-danger btn-sm" onClick={() => handleDelete(event.id)}>
+                    Elimina
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
 
       {editingEvent && (
-        <div className="card p-3 mt-4">
-          <h5>Modifica evento</h5>
-          <form onSubmit={handleUpdate}>
-            <input
-              className="form-control my-1"
-              value={editingEvent.movieTitle}
-              onChange={e => setEditingEvent({ ...editingEvent, movieTitle: e.target.value })}
-              placeholder="Titolo film"
-            />
-            <input
-              className="form-control my-1"
-              value={editingEvent.date}
-              onChange={e => setEditingEvent({ ...editingEvent, date: e.target.value })}
-              placeholder="Data"
-            />
-            <input
-              className="form-control my-1"
-              value={editingEvent.time}
-              onChange={e => setEditingEvent({ ...editingEvent, time: e.target.value })}
-              placeholder="Orario"
-            />
-            <input
-              className="form-control my-1"
-              value={editingEvent.cinema}
-              onChange={e => setEditingEvent({ ...editingEvent, cinema: e.target.value })}
-              placeholder="Cinema"
-            />
-            <button className="btn btn-success btn-sm mt-2" type="submit">Salva</button>
-            <button className="btn btn-secondary btn-sm mt-2 ms-2" onClick={() => setEditingEvent(null)}>Annulla</button>
-          </form>
+        <div className="card mt-5 shadow">
+          <div className="card-body">
+            <h5 className="card-title">Modifica Evento</h5>
+            <form onSubmit={handleUpdate}>
+              <div className="mb-3">
+                <label className="form-label">Titolo film</label>
+                <input
+                  className="form-control"
+                  value={editingEvent.movieTitle}
+                  onChange={e => setEditingEvent({ ...editingEvent, movieTitle: e.target.value })}
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Data</label>
+                <input
+                  className="form-control"
+                  type="date"
+                  value={editingEvent.date}
+                  onChange={e => setEditingEvent({ ...editingEvent, date: e.target.value })}
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Orario</label>
+                <input
+                  className="form-control"
+                  type="time"
+                  value={editingEvent.time}
+                  onChange={e => setEditingEvent({ ...editingEvent, time: e.target.value })}
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Cinema</label>
+                <input
+                  className="form-control"
+                  value={editingEvent.cinema}
+                  onChange={e => setEditingEvent({ ...editingEvent, cinema: e.target.value })}
+                />
+              </div>
+              <div className="d-flex justify-content-end gap-2">
+                <button className="btn btn-success" type="submit">Salva</button>
+                <button className="btn btn-secondary" onClick={() => setEditingEvent(null)}>Annulla</button>
+              </div>
+            </form>
+          </div>
         </div>
       )}
     </div>
