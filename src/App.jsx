@@ -25,7 +25,7 @@ function App() {
 
   return (
     <div className="bg-light d-flex flex-column min-vh-100">
-      <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4 px-4 py-2">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm mb-4 px-4 py-2">
   <div className="container-fluid">
     {/* Toggle button per mobile */}
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
@@ -34,17 +34,18 @@ function App() {
 
     {/* Logo centrato */}
     <Link className="navbar-brand mx-auto d-lg-none" to="/">
-      <img src="/logo.png" alt="logo" style={{ width: '120px', height: 'auto' }} />
+      <img src="/logo.png" alt="logo" className="img-fluid" style={{ width: '100px', height: 'auto' }}
+     />
     </Link>
 
     <div className="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
       {/* Sinistra */}
       <ul className="navbar-nav d-flex flex-row flex-lg-row">
         <li className="nav-item mx-2">
-          <Link className="nav-link fw-semibold text-dark" to="/events">Eventi</Link>
+          <Link className="nav-link fw-semibold text-white" to="/events">Eventi</Link>
         </li>
         <li className="nav-item mx-2">
-          <Link className="nav-link fw-semibold text-dark" to="/events/create">Crea evento</Link>
+          <Link className="nav-link fw-semibold text-white" to="/events/create">Crea evento</Link>
         </li>
       </ul>
 
@@ -57,7 +58,7 @@ function App() {
       {/* Destra */}
       <ul className="navbar-nav d-flex flex-row flex-lg-row">
         <li className="nav-item mx-2">
-          <Link className="nav-link fw-semibold text-dark" to="/profile">Profilo</Link>
+          <Link className="nav-link fw-semibold text-white" to="/profile">Profilo</Link>
         </li>
         {user ? (
           <>
@@ -71,10 +72,10 @@ function App() {
         ) : (
           <>
             <li className="nav-item mx-2">
-              <Link className="nav-link fw-semibold text-dark" to="/login">Login</Link>
+              <Link className="nav-link fw-semibold text-white" to="/login">Login</Link>
             </li>
             <li className="nav-item mx-2">
-              <Link className="nav-link fw-semibold text-dark" to="/register">Registrati</Link>
+              <Link className="nav-link fw-semibold text-white" to="/register">Registrati</Link>
             </li>
           </>
         )}
