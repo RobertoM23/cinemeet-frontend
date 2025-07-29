@@ -66,3 +66,19 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+.title-effect:hover {
+  color: #0a58ca;
+}
+.title-effect:hover::after {
+  width: 100%;
+}
+.navbar-dark .nav-link {
+  transition: color 0.3s;
+}
+
+.navbar-dark .nav-link:hover {
+  color: #ffc107 !important;
+}
+.nav-link:hover {
+  color: #ffc107 !important;
+}

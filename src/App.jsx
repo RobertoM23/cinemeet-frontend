@@ -27,38 +27,41 @@ function App() {
     <div className="bg-light d-flex flex-column min-vh-100">
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm mb-4 px-4 py-2">
   <div className="container-fluid">
-    {/* Toggle button per mobile */}
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
       <span className="navbar-toggler-icon"></span>
     </button>
 
-    {/* Logo centrato */}
+    {/* Logo centrato mobile */}
     <Link className="navbar-brand mx-auto d-lg-none" to="/">
-      <img src="/logo.png" alt="logo" className="img-fluid" style={{ width: '100px', height: 'auto' }}
-     />
+      <img src="/logo.png" alt="logo" className="img-fluid" style={{ width: '100px', height: 'auto' }} />
     </Link>
 
     <div className="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
       {/* Sinistra */}
       <ul className="navbar-nav d-flex flex-row flex-lg-row">
         <li className="nav-item mx-2">
-          <Link className="nav-link fw-semibold text-white" to="/events">Eventi</Link>
+          <Link className="nav-link fw-semibold text-white d-flex align-items-center gap-1" to="/events">
+            <i className="bi bi-calendar-event-fill"></i> Eventi
+          </Link>
         </li>
         <li className="nav-item mx-2">
-          <Link className="nav-link fw-semibold text-white" to="/events/create">Crea evento</Link>
+          <Link className="nav-link fw-semibold text-white d-flex align-items-center gap-1" to="/events/create">
+            <i className="bi bi-plus-square-fill"></i> Crea evento
+          </Link>
         </li>
       </ul>
 
       {/* Logo desktop */}
       <Link className="navbar-brand d-none d-lg-block mx-auto" to="/">
-        <img src="/logo.png" alt="logo" className="img-fluid d-none d-lg-block"
-         style={{ width: '160px', height: 'auto' }} />
+        <img src="/logo.png" alt="logo" className="img-fluid d-none d-lg-block" style={{ width: '160px', height: 'auto' }} />
       </Link>
 
       {/* Destra */}
       <ul className="navbar-nav d-flex flex-row flex-lg-row">
         <li className="nav-item mx-2">
-          <Link className="nav-link fw-semibold text-white" to="/profile">Profilo</Link>
+          <Link className="nav-link fw-semibold text-white d-flex align-items-center gap-1" to="/profile">
+            <i className="bi bi-person-fill"></i> Profilo
+          </Link>
         </li>
         {user ? (
           <>
@@ -72,10 +75,14 @@ function App() {
         ) : (
           <>
             <li className="nav-item mx-2">
-              <Link className="nav-link fw-semibold text-white" to="/login">Login</Link>
+              <Link className="nav-link fw-semibold text-white d-flex align-items-center gap-1" to="/login">
+                <i className="bi bi-box-arrow-in-right"></i> Login
+              </Link>
             </li>
             <li className="nav-item mx-2">
-              <Link className="nav-link fw-semibold text-white" to="/register">Registrati</Link>
+              <Link className="nav-link fw-semibold text-white d-flex align-items-center gap-1" to="/register">
+                <i className="bi bi-pencil-square"></i> Registrati
+              </Link>
             </li>
           </>
         )}
